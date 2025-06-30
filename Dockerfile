@@ -1,2 +1,16 @@
-docker volume create n8n_data
-docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
+FROM n8nio/n8n:latest
+
+# Create the .n8n directory
+RUN mkdir -p /home/node/.n8n
+
+# Set the working directory
+WORKDIR /home/node
+
+# Use the node user
+USER node
+
+# Expose the port
+EXPOSE 5678
+
+# Start n8n
+CMD ["n8n", "start"]
